@@ -278,18 +278,8 @@
   </style>
   <script>
     window.onload = function() {
-      // Audio player setup
-      const music = document.getElementById('bgMusic');
-      const playButton = document.querySelector('.play-button');
-      playButton.style.display = 'block';
-      playButton.onclick = function() {
-        music.play();
-        playButton.style.display = 'none';
-      };
-
-      // Confetti effect
-      const duration = 10 * 1000;
-      const animationEnd = Date.now() + duration;
+      // Confetti setup
+      const animationEnd = Date.now() + (3 * 1000);
 
       function randomInRange(min, max) {
         return Math.random() * (max - min) + min;
@@ -331,7 +321,7 @@
       const surpriseBtn = document.getElementById('surprise-btn');
       const closeBtn = document.querySelector('.close-modal');
 
-      surpriseBtn.onclick = function() {
+      surpriseBtn.addEventListener('click', function() {
         modal.classList.add('show');
         confetti({
           particleCount: 100,
@@ -339,22 +329,33 @@
           origin: { y: 0.6 },
           colors: ['#ff69b4', '#ffb86c', '#ff69b4', '#fff']
         });
-      }
+      });
 
-      closeBtn.onclick = function() {
+      closeBtn.addEventListener('click', function() {
         modal.classList.remove('show');
-      }
+      });
 
-      modal.onclick = function(e) {
+      modal.addEventListener('click', function(e) {
         if (e.target === modal) {
           modal.classList.remove('show');
         }
+      });
+
+      // Audio player setup
+      const music = document.getElementById('bgMusic');
+      const playButton = document.querySelector('.play-button');
+      if (playButton) {
+        playButton.style.display = 'block';
+        playButton.onclick = function() {
+          music.play();
+          playButton.style.display = 'none';
+        };
       }
     };
   </script>
 </head>
 <body>
-  <audio class="audio-player" controls autoplay loop>
+  <audio id="bgMusic" class="audio-player" controls autoplay loop>
     <source src="song.wav" type="audio/wav">
     Your browser does not support the audio element.
   </audio>
