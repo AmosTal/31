@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>יום הולדת 31 שמח מבוביטו</title>
+  <link rel="icon" type="image/png" href="images/main.png">
   <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Varela+Round&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -166,16 +168,71 @@
     }
     .audio-player {
       position: fixed;
-      bottom: 20px;
+      top: 20px;
       right: 20px;
       z-index: 1000;
       opacity: 0.8;
       transition: opacity 0.3s ease;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 5px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
     }
     .audio-player:hover {
       opacity: 1;
     }
   </style>
+  <script>
+    window.onload = function() {
+      // Audio player setup
+      const music = document.getElementById('bgMusic');
+      const playButton = document.querySelector('.play-button');
+      playButton.style.display = 'block';
+      playButton.onclick = function() {
+        music.play();
+        playButton.style.display = 'none';
+      };
+
+      // Confetti effect
+      const duration = 10 * 1000;
+      const animationEnd = Date.now() + duration;
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      (function frame() {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) return;
+
+        confetti({
+          particleCount: 3,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#ff69b4', '#ffb86c', '#ff69b4']
+        });
+        confetti({
+          particleCount: 3,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#ff69b4', '#ffb86c', '#ff69b4']
+        });
+
+        requestAnimationFrame(frame);
+      }());
+
+      // Big initial burst
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#ff69b4', '#ffb86c', '#ff69b4', '#fff']
+      });
+    };
+  </script>
 </head>
 <body>
   <audio class="audio-player" controls autoplay loop>
